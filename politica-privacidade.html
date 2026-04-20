@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Privacidade - UDrive</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .legal-content {
+        padding: 130px 2rem 4rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .legal-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: var(--primary);
+      }
+      .legal-content h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: var(--text-main);
+      }
+      .legal-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: var(--text-main);
+      }
+      .legal-content p {
+        color: var(--text-muted);
+        margin-bottom: 1.2rem;
+        line-height: 1.7;
+      }
+      .legal-content ul, .legal-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+      .legal-content li {
+        margin-bottom: 0.5rem;
+      }
+      .legal-content a.btn {
+        margin: 2rem 0;
+        display: inline-flex;
+      }
+      .legal-content strong {
+        color: var(--text-main);
+        font-weight: 600;
+      }
+      .legal-content a {
+        color: var(--secondary);
+        text-decoration: none;
+      }
+      .legal-content a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Elements -->
+    <div class="bg-glow top-left"></div>
+    <div class="bg-glow bottom-right"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+      <div class="container nav-content">
+        <a href="/" class="logo">
+          <img src="/udrive-escrita-sem-fundo.png" alt="UDrive Logo" class="logo-img">
+        </a>
+        <div class="nav-links">
+          <a href="/#features">Recursos</a>
+          <a href="/#download" class="btn btn-outline">Baixar App</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container legal-content fade-up visible">
+      <div class="glass-panel" style="padding: 3rem;">
+        <div id="markdown-content">Carregando Política de Privacidade...</div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <img src="/udrive-escrita-sem-fundo.png" alt="UDrive Logo" class="logo-img">
+          </a>
+          <p>Conectando alunos aos melhores instrutores de trânsito autônomos em todo o Brasil.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <a href="/termos-uso.html">Termos de Uso</a>
+          <a href="/politica-privacidade.html">Privacidade</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 UDrive. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+      import markdownText from '/docs/politica-privacidade.md?raw';
+      
+      let text = markdownText;
+      if (!text.trim().startsWith('# ')) {
+          const lines = text.split('\n');
+          if (lines.length > 0) {
+              lines[0] = '# ' + lines[0];
+              text = lines.join('\n');
+          }
+      }
+      document.getElementById('markdown-content').innerHTML = marked.parse(text);
+    </script>
+  </body>
+</html>
