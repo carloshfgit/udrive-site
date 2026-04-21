@@ -18,6 +18,33 @@ Em vez de utilizar chaves JSON fixas (que são menos seguras), este projeto util
 - **Workload Identity Provider**: `github-actions-provider`
 - **Service Account**: `github-actions-deploy@project-ef671036-8080-43e8-bd9.iam.gserviceaccount.com`
 
+### Comandos de Configuração (gcloud):
+Caso precise recriar a infraestrutura:
+
+```bash
+# 1. Criar o Pool
+gcloud iam workload-identity-pools create "github-actions-pool" \
+  --project="project-ef671036-8080-43e8-bd9" \
+  --location="global" \
+  --display-name="GitHub Actions Pool"
+
+# 2. Criar o Provider OIDC
+gcloud iam workload-identity-pools providers create-oidc "github-actions-provider" \
+  --project="project-ef671036-8080-43e8-bd9" \
+  --location="global" \
+  --workload-identity-pool="github-actions-pool" \
+  --display-name="GitHub Actions Provider" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository" \
+  --attribute-condition="attribute.repository == 'carloshfgit/udrive-site'" \
+  --issuer-uri="https://token.actions.githubusercontent.com"
+
+# 3. Vincular a Conta de Serviço ao Pool
+gcloud iam service-accounts add-iam-policy-binding "github-actions-deploy@project-ef671036-8080-43e8-bd9.iam.gserviceaccount.com" \
+  --project="project-ef671036-8080-43e8-bd9" \
+  --role="roles/iam.workloadIdentityUser" \
+  --member="principalSet://iam.googleapis.com/projects/833430646448/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/carloshfgit/udrive-site"
+```
+
 ## 🛠️ Configuração do Workflow
 O arquivo de configuração está localizado em [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
